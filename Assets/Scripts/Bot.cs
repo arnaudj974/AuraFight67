@@ -5,7 +5,9 @@ public class Bot : MonoBehaviour
 {
     public int lvl;
     public float tpsRep;
+    public float chances = 2.0f;
     private Coroutine corout;
+    public bool trouve;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,9 +20,9 @@ public class Bot : MonoBehaviour
         
     }
 
-    public void StartBot()
+    public void StartBot(float delai)
     {
-        corout = StartCoroutine(LaunchBot());
+        corout = StartCoroutine(LaunchBot(delai));
     }
 
     public void StopBot()
@@ -28,17 +30,14 @@ public class Bot : MonoBehaviour
         StopCoroutine(corout);
     }
 
-    public IEnumerator LaunchBot()
+    public IEnumerator LaunchBot(float delai)
     {
-        while (true)
+        float tpsBot = Random.Range(0.1f, tpsRep);
+        trouve = false;
+        if (delai >= tpsBot)
         {
-            yield return new WaitForSeconds(Random.Range(0,tpsRep));
-            Action();
+            yield return new WaitForSeconds(tpsBot);
+            trouve = chances > Random.Range(0f, 4f);
         }
-    }
-
-    public bool Action()
-    {
-        return true;
     }
 }

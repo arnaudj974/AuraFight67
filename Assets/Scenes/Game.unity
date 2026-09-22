@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dc3a034a967e14a8cb895a1632227f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  screenTime: 0.5
+  screenTime: 0.7
   waitTime: 0.2
   txt: {fileID: 1126196660}
 --- !u!1 &462451308
@@ -1217,8 +1217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0093ee53b960943a2d7b2e184cad29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  lvl: 0
-  tpsRep: 0
+  lvl: 1
+  tpsRep: 0.8
+  chances: 2
+  trouve: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class GameJvAI : MonoBehaviour
     public Bot bot;
     public int points = 10;
     private bool changedKey=false;
+    private bool isBotStarted = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,20 @@ public class GameJvAI : MonoBehaviour
         if (bulle.GetInputAsked() == ' ')
         {
             changedKey = true;
+            isBotStarted = false;
+        }
+        else
+        {
+            if (bot.trouve)
+            {
+                scoreBot.AddScore(points);
+                bot.trouve = false;
+            }
+            if (!isBotStarted)
+            {
+                bot.StartBot(bulle.screenTime);
+                isBotStarted = true;
+            }
         }
         if (Input.anyKeyDown)
         {
