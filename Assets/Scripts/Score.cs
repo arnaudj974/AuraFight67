@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -6,13 +7,12 @@ public class Score : MonoBehaviour
     public int score = 0;
     public int mult = 1;
     private TextMeshProUGUI txt;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private List<int> listMult = new List<int>();
     void Start()
     {
         txt = GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -21,6 +21,43 @@ public class Score : MonoBehaviour
     public void AddScore(int points)
     {
         score += points * mult;
-        txt.text = score.ToString();
+        ShowScore();
+    }
+
+    public void AddtoMult(int nb)
+    {
+        listMult.Add(nb);
+        if (listMult.Count == 11)
+        {
+            listMult.RemoveAt(0);
+        }
+        mult=ReturnMult();
+    }
+
+    public int ReturnMult()
+    {
+        if (listMult is null)
+        {
+            return 1;
+        }
+        int i = listMult.Count-1;
+        int m = 1;
+        while (i >= 0 && listMult[i] != 0)
+        {
+            m++;
+            i--;
+        }
+        return m > 1 ? m / 2 : 1;
+    }
+
+    public void ShowScore()
+    {
+        txt.text = score.ToString() + " X " + mult.ToString();
+    }
+
+    public void Clear()
+    {
+        score = 0;
+        mult = 1;
     }
 }

@@ -13,14 +13,12 @@ public class Bubble : MonoBehaviour
 
     private SpriteRenderer sp;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sp = GetComponent<SpriteRenderer>();
         sp.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -70,9 +68,9 @@ public class Bubble : MonoBehaviour
         sp.enabled = false;
     }
 
-    public void StartBulle()
+    public void StartBulle(int timeIntro)
     {
-        corout = StartCoroutine(SpawnBulle());
+        corout = StartCoroutine(SpawnBulle(timeIntro));
     }
 
     public void StopBulle()
@@ -80,8 +78,9 @@ public class Bubble : MonoBehaviour
         StopCoroutine(corout);
     }
 
-    public IEnumerator SpawnBulle()
+    public IEnumerator SpawnBulle(int timeIntro)
     {
+        yield return new WaitForSeconds(timeIntro);
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
@@ -89,5 +88,11 @@ public class Bubble : MonoBehaviour
             yield return new WaitForSeconds(screenTime);
             Hide();
         }
+    }
+
+    public void Clear()
+    {
+        sp.enabled = false;
+        txt.text = "";
     }
 }
