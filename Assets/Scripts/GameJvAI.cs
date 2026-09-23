@@ -3,7 +3,7 @@ using TMPro;
 
 public class GameJvAI : MonoBehaviour
 {
-    public int lvl = 1;
+    public int lvl = 0;
     public GameMaster gm;
     public Bubble bulle;
     public Player player;

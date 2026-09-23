@@ -1626,6 +1626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b9a5d72faaef44b9dc2e90bbeaecbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  lvl: 0
   gm: {fileID: 478827952}
   bulle: {fileID: 393789647}
   player: {fileID: 1175228117}
