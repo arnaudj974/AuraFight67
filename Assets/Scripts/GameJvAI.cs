@@ -3,7 +3,7 @@ using TMPro;
 
 public class GameJvAI : MonoBehaviour
 {
-    public int lvl = 0;
+    public int lvl = 1;
     public GameMaster gm;
     public Bubble bulle;
     public Player player;
@@ -22,6 +22,7 @@ public class GameJvAI : MonoBehaviour
     {
         if (gm.gameStarted)//verifie que le jeu a commencé
         {
+            
             if (gm.gameFinie)//verifie si le temps de jeu est fini
             {
                 bulle.StopBulle();
@@ -90,8 +91,6 @@ public class GameJvAI : MonoBehaviour
         }
         player.score.Clear();
         bot.score.Clear();
-        bot.score.ShowScore();
-        player.score.ShowScore();
         bot.NewBot(lvl);
         gm.Clear();
         gm.StartGameMaster();

@@ -59,5 +59,8 @@ public class Score : MonoBehaviour
     {
         score = 0;
         mult = 1;
+        txt.text=" ";
+        listMult.Clear();
     }
+
 }

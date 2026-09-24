@@ -5,14 +5,15 @@ public class Player : MonoBehaviour
 {
     private Coroutine corout;
     public Score score;
+    public Animator anim;
     void Start()
     {
-
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-
+        anim.SetFloat("multSpeed", score.mult);
     }
 
     public void StartPlayer(float delai)

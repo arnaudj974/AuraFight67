@@ -12,7 +12,9 @@ public class GameMaster : MonoBehaviour
     public float timeGame = 10f;
     public bool gameFinie = false;
     public bool gameStarted = false;
-    public int res;
+    public int res=3;
+    public Sprite spriteGreen;
+    public Sprite spriteRed;
     void Start()
     {
 
@@ -36,6 +38,7 @@ public class GameMaster : MonoBehaviour
     public IEnumerator LaunchGameMaster()
     {
         btnNext.gameObject.SetActive(false);
+        txtCentral.fontSize = 300;
         for (int i = timeIntro; i > 0; i--) //decompte de depart
         {
             txtCentral.text = i.ToString();
@@ -43,10 +46,20 @@ public class GameMaster : MonoBehaviour
         }
         transform.localScale = new Vector3(0, 0, 0);
         gameStarted = true;
+        txtCentral.fontSize = 200;
         yield return new WaitForSeconds(timeGame); //temps du jeu
         gameFinie = true;
         btnNext.gameObject.SetActive(true);
-        btnNext.GetComponentInChildren<TextMeshProUGUI>().text = res == 0 ? "ADVERSAIRE SUIVANT" : "REESAYER";
+        switch (res)
+        {
+            case 0: btnNext.GetComponentInChildren<TextMeshProUGUI>().text = "NEXT";
+                btnNext.GetComponent<Image>().sprite = spriteGreen;
+                break;
+            case 1:case 2 :
+                btnNext.GetComponentInChildren<TextMeshProUGUI>().text = "RETRY";
+                btnNext.GetComponent<Image>().sprite = spriteRed;
+                break;
+        }
         txtCentral.text = StringResult();
         transform.localScale = new Vector3(1, 1, 1);
     }

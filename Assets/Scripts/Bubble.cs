@@ -1,22 +1,25 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 
 public class Bubble : MonoBehaviour
 {
-    public float screenTime;
-    public float waitTime;
+    public float screenTime=0.7f;
+    public float waitTime=0.2f;
     private char inputAsked;
     public Coroutine corout;
 
     public TextMeshProUGUI txt;
-
-    private SpriteRenderer sp;
-
+    private Image image;
+    private RectTransform rectThis;
+    private RectTransform rectTxt;
     void Start()
     {
-        sp = GetComponent<SpriteRenderer>();
-        sp.enabled = false;
+        image = GetComponent<Image>();
+        rectThis = GetComponent<RectTransform>();
+        rectTxt = txt.GetComponent<RectTransform>();
+        image.enabled = false;
     }
 
     void Update()
@@ -58,14 +61,15 @@ public class Bubble : MonoBehaviour
                 inputAsked = ' ';
                 break;
         }
-        sp.enabled = true;
+        PositionRandom();
+        image.enabled = true;
     }
 
     private void Hide()
     {
         txt.text = "";
         inputAsked = ' ';
-        sp.enabled = false;
+        image.enabled = false;
     }
 
     public void StartBulle(int timeIntro)
@@ -92,7 +96,15 @@ public class Bubble : MonoBehaviour
 
     public void Clear()
     {
-        sp.enabled = false;
+        image.enabled = false;
         txt.text = "";
+    }
+
+    public void PositionRandom()
+    {
+        Vector3 v = new Vector3(Random.Range(-130f, 130f), Random.Range(-200f, 200f), 0);
+        rectThis.anchoredPosition = v;
+        rectTxt.anchoredPosition = v;
+        txt.color= Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }
 }

@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Bot : MonoBehaviour
 {
@@ -9,6 +7,7 @@ public class Bot : MonoBehaviour
     private float chances = 2f;
     private Coroutine corout;
     public Score score;
+    public Animator anim;
     void Start()
     {
 
@@ -16,7 +15,7 @@ public class Bot : MonoBehaviour
 
     void Update()
     {
-
+        anim.SetFloat("multSpeed", score.mult);
     }
 
     public void StartBot(float delai, int points)
@@ -52,6 +51,7 @@ public class Bot : MonoBehaviour
 
     public void NewBot(int lvl)
     {
+        anim.SetInteger("lvl", lvl);
         switch (lvl)
         {
             case 1:
@@ -72,5 +72,4 @@ public class Bot : MonoBehaviour
                 break;
         }
     }
-
 }
