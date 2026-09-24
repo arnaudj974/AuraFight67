@@ -7,6 +7,8 @@ public class GameMaster : MonoBehaviour
 {
     private Coroutine corout;
     public TextMeshProUGUI txtCentral;
+    private TextMeshProUGUI txtBtn;
+    private Image imgBtn;
     public Button btnNext;
     public int timeIntro = 3;
     public float timeGame = 10f;
@@ -17,7 +19,8 @@ public class GameMaster : MonoBehaviour
     public Sprite spriteRed;
     void Start()
     {
-
+        txtBtn = btnNext.GetComponentInChildren<TextMeshProUGUI>();
+        imgBtn = btnNext.GetComponent<Image>();
     }
 
     void Update()
@@ -50,17 +53,24 @@ public class GameMaster : MonoBehaviour
         yield return new WaitForSeconds(timeGame); //temps du jeu
         gameFinie = true;
         btnNext.gameObject.SetActive(true);
+        txtCentral.text = StringResult();
         switch (res)
         {
-            case 0: btnNext.GetComponentInChildren<TextMeshProUGUI>().text = "NEXT";
-                btnNext.GetComponent<Image>().sprite = spriteGreen;
+            case 0:
+                txtBtn.text = "NEXT";
+                imgBtn.sprite = spriteGreen;
                 break;
-            case 1:case 2 :
-                btnNext.GetComponentInChildren<TextMeshProUGUI>().text = "RETRY";
-                btnNext.GetComponent<Image>().sprite = spriteRed;
+            case 1:
+            case 2:
+                txtBtn.text = "RETRY";
+                imgBtn.sprite = spriteRed;
+                break;
+            case 3:
+                imgBtn.sprite = spriteRed;
+                txtBtn.text = "QUIT";
+                txtCentral.text = "YOU CANT BEAT THE GOAT";
                 break;
         }
-        txtCentral.text = StringResult();
         transform.localScale = new Vector3(1, 1, 1);
     }
 

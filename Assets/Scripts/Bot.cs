@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
-    private float tpsRep = 0.9f;
+    private float tpsRep = 0.7f;
     private float chances = 2f;
     private Coroutine corout;
     public Score score;
@@ -55,19 +55,15 @@ public class Bot : MonoBehaviour
         switch (lvl)
         {
             case 1:
-                tpsRep = 0.9f;
                 chances = 2.5f;
                 break;
             case 2:
-                tpsRep = 0.8f;
                 chances = 3f;
                 break;
             case 3:
-                tpsRep = 0.7f;
                 chances = 3.5f;
                 break;
             case 4:
-                tpsRep = 0.7f;
                 chances = 4f;
                 break;
         }

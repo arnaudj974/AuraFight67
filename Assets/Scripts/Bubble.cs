@@ -9,7 +9,6 @@ public class Bubble : MonoBehaviour
     public float waitTime=0.2f;
     private char inputAsked;
     public Coroutine corout;
-
     public TextMeshProUGUI txt;
     private Image image;
     private RectTransform rectThis;
@@ -32,14 +31,9 @@ public class Bubble : MonoBehaviour
         return inputAsked;
     }
 
-    public int ChooseInput()
-    {
-        return Random.Range(1, 5);
-    }
-
     private void Show()
     {
-        switch (ChooseInput())
+        switch (Random.Range(1, 5))
         {
             case 1:
                 inputAsked = 'w';

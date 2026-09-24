@@ -80,7 +80,7 @@ public class GameJvAI : MonoBehaviour
         }
         else
         {
-            return 1;
+            return lvl == 4 ? 3 : 1;
         }
     }
 
