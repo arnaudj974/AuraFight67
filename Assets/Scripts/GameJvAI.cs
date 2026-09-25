@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameJvAI : MonoBehaviour
 {
@@ -15,14 +16,13 @@ public class GameJvAI : MonoBehaviour
 
     void Start()
     {
-        OnStart();
+        OnStart(true);
     }
-
     void Update()
     {
         if (gm.gameStarted)//verifie que le jeu a commencé
         {
-            
+
             if (gm.gameFinie)//verifie si le temps de jeu est fini
             {
                 bulle.StopBulle();
@@ -31,7 +31,7 @@ public class GameJvAI : MonoBehaviour
             else
             {
                 gm.res = GetResult();
-                if (bulle.GetInputAsked() == ' ')
+                if (bulle.GetInputAsked() == ' ') //réinitialisation quand la bulle n'est pas affichée
                 {
                     changedKey = true;
                     isBotStarted = false;
@@ -55,13 +55,11 @@ public class GameJvAI : MonoBehaviour
                     player.StopPlayer(); //stop le coroutine pour ne pas réinitialiser le mult
                     if (Input.GetKeyDown(bulle.GetInputAsked().ToString()) && changedKey)
                     {
-                        player.score.AddtoMult(1);
-                        player.score.AddScore(points);
+                        player.AddScore(points, 1);
                     }
                     else
                     {
-                        player.score.AddtoMult(0);
-                        player.score.ShowScore();
+                        player.AddScore(0, 0);
                     }
                     changedKey = false;
                 }
@@ -84,17 +82,25 @@ public class GameJvAI : MonoBehaviour
         }
     }
 
-    public void OnStart() {
-        if (gm.res == 0)
+    public void OnStart(bool newLvl)
+    {
+        if (!newLvl)
+        {
+            bulle.StopBulle();
+            player.StopPlayer();
+            bot.StopBot();
+            gm.StopGameMaster();
+        }
+        if (gm.res == 0 && newLvl)
         {
             lvl++;
         }
         player.score.Clear();
         bot.score.Clear();
         bot.NewBot(lvl);
+        bulle.Clear();
         gm.Clear();
         gm.StartGameMaster();
         bulle.StartBulle(gm.timeIntro);
     }
-
 }

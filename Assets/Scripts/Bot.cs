@@ -15,7 +15,7 @@ public class Bot : MonoBehaviour
 
     void Update()
     {
-        anim.SetFloat("multSpeed", score.mult);
+        anim.SetFloat("multSpeed", score.mult); //update de l'animation suivant la mult
     }
 
     public void StartBot(float delai, int points)
@@ -39,17 +39,15 @@ public class Bot : MonoBehaviour
         }
         if (trouve)
         {
-            score.AddtoMult(1);
-            score.AddScore(points);
+            AddScore(points, 1);
         }
         else
         {
-            score.AddtoMult(0);
-            score.ShowScore();
+            AddScore(0, 0);
         }
     }
 
-    public void NewBot(int lvl)
+    public void NewBot(int lvl) //création du bot selon le level
     {
         anim.SetInteger("lvl", lvl);
         switch (lvl)
@@ -67,5 +65,11 @@ public class Bot : MonoBehaviour
                 chances = 4f;
                 break;
         }
+    }
+    public void AddScore(int points, int mult)
+    {
+        score.AddtoMult(mult);
+        score.AddScore(points);
+        score.ShowScore();
     }
 }

@@ -6,6 +6,7 @@ public class Score : MonoBehaviour
 {
     public int score = 0;
     public int mult = 1;
+
     private TextMeshProUGUI txt;
     private List<int> listMult = new List<int>();
     void Start()
@@ -21,7 +22,6 @@ public class Score : MonoBehaviour
     public void AddScore(int points)
     {
         score += points * mult;
-        ShowScore();
     }
 
     public void AddtoMult(int nb)
@@ -34,7 +34,7 @@ public class Score : MonoBehaviour
         mult=ReturnMult();
     }
 
-    public int ReturnMult()
+    public int ReturnMult() //calculer le mult suivant le nombre de bons inputs réussis à la suite
     {
         if (listMult is null)
         {
@@ -62,5 +62,4 @@ public class Score : MonoBehaviour
         txt.text=" ";
         listMult.Clear();
     }
-
 }
