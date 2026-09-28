@@ -1,25 +1,35 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class GameJvAI : MonoBehaviour
+public class GameInfinie : MonoBehaviour
 {
-    public float screenTime = 0.7f;
-    public float waitTime = 0.2f;
-    public int lvl = 1;
+    private float screenTime;
+    private float waitTime;
+    public float baseScreenTime = 0.9f;
+    public float baseWaitTime = 0.25f;
+    public float minScreenTime = 0.15f;
+    public float minWaitTime = 0.05f;
+    public float difficultyRate = 0.05f;
+    public int lvl = 0;
     public GameMaster gm;
     public Bubble bulle;
     public Player player;
     public Bot bot;
-    public Background back;
     public int points = 10;
+    public TextMeshProUGUI txtLvl;
     private bool changedKey = true;
-    private bool isBotStarted = false;
     private bool isPlayerStarted = false;
+    private bool isBotStarted = false;
 
     void Start()
     {
+        screenTime = baseScreenTime;
+        waitTime = baseWaitTime;
         OnStart(true);
         player.pvp = false;
         gm.pvp = false;
+
     }
     void Update()
     {
@@ -33,6 +43,7 @@ public class GameJvAI : MonoBehaviour
             }
             else
             {
+                gm.res = GetResult();
                 if (bulle.GetInputAsked() == ' ') //réinitialisation quand la bulle n'est pas affichée
                 {
                     changedKey = true;
@@ -65,24 +76,21 @@ public class GameJvAI : MonoBehaviour
                     }
                     changedKey = false;
                 }
-                gm.res = GetResult();
+                if (player.score.Erreur()) { OnStart(false); }
             }
         }
     }
     private int GetResult()
     {
-        if (player.score.score > bot.score.score)
+        if (player.score.score >= bot.score.score)
         {
             return 0;
         }
-        else if (player.score.score < bot.score.score)
+        else
         {
             return 2;
         }
-        else
-        {
-            return lvl == 4 ? 3 : 1;
-        }
+
     }
 
     public void OnStart(bool newLvl)
@@ -96,15 +104,28 @@ public class GameJvAI : MonoBehaviour
         }
         if (gm.res == 0 && newLvl)// si win
         {
-            lvl++;
+            UpdateDifficulty();
         }
-        back.ChangeBackground(lvl); //change le backround pour le dernier lvl
+        txtLvl.text = "LEVEL " + lvl.ToString();
         player.Clear();
-        bot.NewBot(lvl, false,screenTime);
+        bot.NewBot(4,true,screenTime);
         bulle.Clear();
         gm.Clear();
-        gm.StartGameMaster(gm.timeGame);
-        bulle.StartBulle(gm.timeIntro,waitTime,screenTime);
+        gm.StartGameMaster(UpdateTimeGame());
+        bulle.StartBulle(gm.timeIntro, waitTime, screenTime);
     }
 
+    public void UpdateDifficulty()
+    {
+        lvl++;
+        screenTime = minScreenTime + (baseScreenTime - minScreenTime) * Mathf.Exp(-difficultyRate * lvl);
+        waitTime = minWaitTime + (baseWaitTime - minWaitTime) * Mathf.Exp(-difficultyRate * lvl);
+    }
+    public float UpdateTimeGame()
+    {
+        float cycle = screenTime + waitTime;
+        int cycleCount = Mathf.Max(1, Mathf.RoundToInt(gm.timeGame / cycle));
+        return cycleCount * cycle;
+    }
 }
+

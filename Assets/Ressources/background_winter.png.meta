@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e58e224782ddb3c4593f691d4edbc521
+guid: cdc8b70b4f424f64daf1d083e0c189e2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5019402111680336584
-    second: Xm4tu_0
+      213: -8502199577989048593
+    second: background_winter_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Xm4tu_0
+      name: background_winter_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1168
-        height: 784
+        width: 1531
+        height: 1027
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c25d8b60af78a540800000000000000
-      internalID: 5019402111680336584
+      spriteID: fe69c78c78e120a80800000000000000
+      internalID: -8502199577989048593
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Xm4tu_0: 5019402111680336584
+      background_winter_0: -8502199577989048593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

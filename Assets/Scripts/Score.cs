@@ -6,12 +6,11 @@ public class Score : MonoBehaviour
 {
     public int score = 0;
     public int mult = 1;
-
-    private TextMeshProUGUI txt;
+    public TextMeshProUGUI txt;
     private List<int> listMult = new List<int>();
     void Start()
     {
-        txt = GetComponent<TextMeshProUGUI>();
+
     }
 
     void Update()
@@ -61,5 +60,11 @@ public class Score : MonoBehaviour
         mult = 1;
         txt.text=" ";
         listMult.Clear();
+    }
+
+    public bool Erreur()
+    {
+        if (listMult is null) { return false; }
+        return listMult[listMult.Count - 1] == 0;
     }
 }

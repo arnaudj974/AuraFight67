@@ -1,30 +1,31 @@
-using UnityEngine;
 using System.Collections;
-using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class Bubble : MonoBehaviour
+public class BubbleJ2 : MonoBehaviour
 {
-
-    private char inputAsked=' ';
+    private string inputAsked;
     public Coroutine corout;
-    public TextMeshProUGUI txt;
+    public Image arrow;
+    public Bubble bulle;
     public Image image;
     private RectTransform rectThis;
-    private RectTransform rectTxt;
+    private RectTransform rectArrow;
     void Start()
     {
+
         rectThis = GetComponent<RectTransform>();
-        rectTxt = txt.GetComponent<RectTransform>();
+        rectArrow = arrow.GetComponent<RectTransform>();
         image.enabled = false;
+        arrow.enabled = false;
     }
 
     void Update()
     {
-        
+
     }
 
-    public char GetInputAsked()
+    public string GetInputAsked()
     {
         return inputAsked;
     }
@@ -34,39 +35,39 @@ public class Bubble : MonoBehaviour
         switch (Random.Range(1, 5))
         {
             case 1:
-                inputAsked = 'w';
-                txt.text = "Z";
+                inputAsked = "up";
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 0);
                 break;
             case 2:
-                inputAsked = 'a';
-                txt.text = "Q";
+                inputAsked = "left";
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 90);
                 break;
             case 3:
-                inputAsked = 's';
-                txt.text = "S";
+                inputAsked = "down";
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 180);
                 break;
             case 4:
-                inputAsked = 'd';
-                txt.text = "D";
+                inputAsked = "right";
+                arrow.transform.rotation = Quaternion.Euler(0, 0, 270);
                 break;
             default:
-                inputAsked = ' ';
+                inputAsked = "";
                 break;
         }
-        PositionRandom();
         image.enabled = true;
+        arrow.enabled = true;
     }
 
     private void Hide()
     {
-        txt.text = "";
-        inputAsked = ' ';
+        arrow.enabled = false;
+        inputAsked = "";
         image.enabled = false;
     }
 
     public void StartBulle(int timeIntro, float waitTime, float screenTime)
     {
-        corout = StartCoroutine(SpawnBulle(timeIntro,waitTime,screenTime));
+        corout = StartCoroutine(SpawnBulle(timeIntro, waitTime, screenTime));
     }
 
     public void StopBulle()
@@ -81,24 +82,28 @@ public class Bubble : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
             Show();
+            PositionRandom();
             yield return new WaitForSeconds(screenTime);
             Hide();
-            
         }
     }
 
     public void Clear()
     {
         image.enabled = false;
-        txt.text = "";
-        inputAsked = ' ';
+        arrow.enabled = false;
+        inputAsked = "";
     }
 
     public void PositionRandom()
     {
-        Vector3 v = new Vector3(Random.Range(-130f, 130f), Random.Range(-200f, 200f), 0);
+        Vector3 v;
+        do
+        {
+            v = new Vector3(Random.Range(-130f, 130f), Random.Range(-200f, 200f), 0);
+        } while (Vector3.Distance(v, bulle.GetComponent<RectTransform>().anchoredPosition) < 200f);
         rectThis.anchoredPosition = v;
-        rectTxt.anchoredPosition = v;
-        txt.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        rectArrow.anchoredPosition = v;
+        arrow.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }
 }

@@ -47,23 +47,25 @@ public class Bot : MonoBehaviour
         }
     }
 
-    public void NewBot(int lvl) //création du bot selon le level
+    public void NewBot(int lvl,bool rand,float screenTime) //création du bot selon le level
     {
-        anim.SetInteger("lvl", lvl);
+        score.Clear();
+        if (rand)
+        {
+            anim.SetInteger("lvl", Random.Range(1, 6));
+        }
+        else
+        {
+            anim.SetInteger("lvl", lvl);
+        }
+        tpsRep = screenTime;
         switch (lvl)
         {
-            case 1:
-                chances = 2.5f;
-                break;
-            case 2:
-                chances = 3f;
-                break;
-            case 3:
-                chances = 3.5f;
-                break;
-            case 4:
-                chances = 4f;
-                break;
+            case 1: chances = 2.5f; break;
+            case 2: chances = 3f; break;
+            case 3: chances = 3.5f; break;
+            case 4: chances = 4f; break;
+            default: chances = 4f; break;
         }
     }
     public void AddScore(int points, int mult)

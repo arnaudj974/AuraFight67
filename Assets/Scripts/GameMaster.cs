@@ -10,6 +10,8 @@ public class GameMaster : MonoBehaviour
     public TextMeshProUGUI txtCentral;
     private TextMeshProUGUI txtBtn;
     private Image imgBtn;
+    public Image imgZQSD;
+    public Image imgArrows;
     public AudioSource audio;
     public Button btnNext;
     public Button btnRetry;
@@ -17,9 +19,10 @@ public class GameMaster : MonoBehaviour
     public float timeGame = 10f;
     public bool gameFinie = false;
     public bool gameStarted = false;
-    public int res=3;
+    public int res=5;
     public Sprite spriteGreen;
     public Sprite spriteRed;
+    public bool pvp;
     void Start()
     {
         txtBtn = btnNext.GetComponentInChildren<TextMeshProUGUI>();
@@ -31,9 +34,9 @@ public class GameMaster : MonoBehaviour
 
     }
 
-    public void StartGameMaster()
+    public void StartGameMaster(float _timeGame)
     {
-        corout = StartCoroutine(LaunchGameMaster());
+        corout = StartCoroutine(LaunchGameMaster(_timeGame));
     }
 
     public void StopGameMaster()
@@ -41,9 +44,11 @@ public class GameMaster : MonoBehaviour
         StopCoroutine(corout);
     }
 
-    public IEnumerator LaunchGameMaster()
+    public IEnumerator LaunchGameMaster(float _timeGame)
     {
         transform.localScale = new Vector3(1, 1, 1);
+        imgZQSD.enabled = true;
+        if (pvp) { imgArrows.enabled = true; }
         btnRetry.gameObject.SetActive(false);
         btnNext.gameObject.SetActive(false);
         txtCentral.fontSize = 300f;
@@ -57,30 +62,14 @@ public class GameMaster : MonoBehaviour
         btnRetry.gameObject.SetActive(true);
         transform.localScale = new Vector3(0, 0, 0);
         gameStarted = true;
-        txtCentral.fontSize = 200f;
-        yield return new WaitForSeconds(timeGame); //temps du jeu
+        yield return new WaitForSeconds(_timeGame); //temps du jeu
         gameFinie = true;
         btnNext.gameObject.SetActive(true);
+        txtCentral.fontSize = 200f;
         txtCentral.text = StringResult();
-        switch (res) //change le panel suivant le score du joueur
-        {
-            case 0:
-                txtBtn.text = "NEXT";
-                imgBtn.sprite = spriteGreen;
-                break;
-            case 1:
-            case 2:
-                txtBtn.text = "RETRY";
-                imgBtn.sprite = spriteRed;
-                break;
-            case 3:  // cas de la victoire finale
-                imgBtn.sprite = spriteRed;
-                txtBtn.text = "QUIT";
-                txtCentral.fontSize = 150f;
-                txtCentral.text = "YOU CANT BEAT THE GOAT";
-                btnNext.onClick.AddListener(LoadMenuScene);
-                break;
-        }
+        ChangeUI();
+        imgZQSD.enabled = false;
+        if (pvp) { imgArrows.enabled = false; }
         transform.localScale = new Vector3(1, 1, 1);
     }
 
@@ -88,10 +77,41 @@ public class GameMaster : MonoBehaviour
     {
         switch (res)
         {
-            case 0:return "VICTOIRE !";
-            case 1:return "EGALITE !";
-            case 2:return "DEFAITE !";
+            case 0:return !pvp ? "YOU WIN !" : "PLAYER 1 WIN";
+            case 1:return "DRAW !";
+            case 2:return !pvp ? "YOU LOSE !" : "PLAYER 2 WIN";
             default: return "";
+        }
+    }
+
+    public void ChangeUI()
+    {
+        if (!pvp)
+        {
+            switch (res) //change le panel suivant le score du joueur
+            {
+                case 0:
+                    txtBtn.text = "NEXT";
+                    imgBtn.sprite = spriteGreen;
+                    break;
+                case 1:
+                case 2:
+                    txtBtn.text = "RETRY";
+                    imgBtn.sprite = spriteRed;
+                    break;
+                case 3:  // cas de la victoire finale
+                    imgBtn.sprite = spriteRed;
+                    txtBtn.text = "QUIT";
+                    txtCentral.fontSize = 150f;
+                    txtCentral.text = "YOU CANT BEAT THE GOAT";
+                    btnNext.onClick.AddListener(LoadMenuScene);
+                    break;
+            }
+        }
+        else
+        {
+            txtBtn.text = "NEXT";
+            imgBtn.sprite = spriteGreen;
         }
     }
 

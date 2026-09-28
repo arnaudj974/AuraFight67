@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public Animator anim;
     public AudioSource audioBooing;
     public AudioSource audio67;
+    public bool pvp;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,7 +45,21 @@ public class Player : MonoBehaviour
     }
     public void PlaySound(AudioSource audioPlay, AudioSource audioStop)
     {
-        if (audioStop.isPlaying) { audioStop.Stop(); }
-        if (!audioPlay.isPlaying) { audioPlay.Play(); }
+        if (pvp)
+        {
+            if (!audioPlay.isPlaying && !audioStop.isPlaying) { audioPlay.Play(); }
+        }
+        else
+        {
+            if (audioStop.isPlaying) { audioStop.Stop(); }
+            if (!audioPlay.isPlaying) { audioPlay.Play(); }
+        }
     }
+    public void Clear()
+    {
+        audio67.Stop();
+        audioBooing.Stop();
+        score.Clear();
+    }
+
 }
