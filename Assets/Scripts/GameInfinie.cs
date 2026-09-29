@@ -16,6 +16,7 @@ public class GameInfinie : MonoBehaviour
     public Bubble bulle;
     public Player player;
     public Bot bot;
+    public Background back;
     public int points = 10;
     public TextMeshProUGUI txtLvl;
     private bool changedKey = true;
@@ -106,9 +107,10 @@ public class GameInfinie : MonoBehaviour
         {
             UpdateDifficulty();
         }
+        bot.NewBot(4, true, screenTime);
+        back.ChangeBackground(Random.Range(1,4));
         txtLvl.text = "LEVEL " + lvl.ToString();
         player.Clear();
-        bot.NewBot(4,true,screenTime);
         bulle.Clear();
         gm.Clear();
         gm.StartGameMaster(UpdateTimeGame());

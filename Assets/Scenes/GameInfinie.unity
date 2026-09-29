@@ -568,8 +568,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -47}
-  m_SizeDelta: {x: 300, y: 50}
+  m_AnchoredPosition: {x: 210, y: -47}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &154531152
 MonoBehaviour:
@@ -1984,7 +1984,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -435, y: 35}
+  m_AnchoredPosition: {x: -320, y: 50}
   m_SizeDelta: {x: 300, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890162586
@@ -2429,6 +2429,7 @@ MonoBehaviour:
   bulle: {fileID: 1948225855}
   player: {fileID: 1175228117}
   bot: {fileID: 1963938204}
+  back: {fileID: 8269665566593312222}
   points: 10
   txtLvl: {fileID: 1364311273}
 --- !u!1 &1364311271
@@ -2869,8 +2870,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -170, y: -47}
-  m_SizeDelta: {x: 300, y: 50}
+  m_AnchoredPosition: {x: -210, y: -47}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1595336497
 MonoBehaviour:
@@ -3310,8 +3311,44 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3714484947663188821, guid: 90c0241b645e95441a72bae7ebc20b32, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8269665566593312222}
   m_SourcePrefab: {fileID: 100100000, guid: 90c0241b645e95441a72bae7ebc20b32, type: 3}
+--- !u!1 &8269665566593312220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3714484947663188821, guid: 90c0241b645e95441a72bae7ebc20b32, type: 3}
+  m_PrefabInstance: {fileID: 8269665566593312219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8269665566593312221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7986469902259016660, guid: 90c0241b645e95441a72bae7ebc20b32, type: 3}
+  m_PrefabInstance: {fileID: 8269665566593312219}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269665566593312220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!114 &8269665566593312222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269665566593312220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3008ce255185140b52a8fec8f47861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Background
+  backSchool: {fileID: -1980765279835512771, guid: 4fca935e069921c49ba7b4770c573acb, type: 3}
+  backChurch: {fileID: -483109212159811774, guid: ec58af93667d64148bc6bf68cb497ff3, type: 3}
+  backAutomn: {fileID: -8104607993462817495, guid: 0b180f5e08eaa6a45a10c90ccf877fd6, type: 3}
+  backWinter: {fileID: -8502199577989048593, guid: cdc8b70b4f424f64daf1d083e0c189e2, type: 3}
+  imgBack: {fileID: 8269665566593312221}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

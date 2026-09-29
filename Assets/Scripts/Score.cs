@@ -35,10 +35,6 @@ public class Score : MonoBehaviour
 
     public int ReturnMult() //calculer le mult suivant le nombre de bons inputs réussis à la suite
     {
-        if (listMult is null)
-        {
-            return 1;
-        }
         int i = listMult.Count-1;
         int m = 1;
         while (i >= 0 && listMult[i] != 0)
@@ -64,7 +60,7 @@ public class Score : MonoBehaviour
 
     public bool Erreur()
     {
-        if (listMult is null) { return false; }
+        if (listMult.Count==0) { return false; }
         return listMult[listMult.Count - 1] == 0;
     }
 }
