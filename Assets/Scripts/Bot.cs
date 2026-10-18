@@ -8,6 +8,7 @@ public class Bot : MonoBehaviour
     private Coroutine corout;
     public Score score;
     public Animator anim;
+    public bool CoroutStarted { get; private set; }
     void Start()
     {
 
@@ -30,6 +31,7 @@ public class Bot : MonoBehaviour
 
     public IEnumerator LaunchBot(float delai, int points)
     {
+        CoroutStarted = true;
         float tpsBot = Random.Range(0.1f, tpsRep);
         bool trouve = false;
         if (delai >= tpsBot)
@@ -45,6 +47,7 @@ public class Bot : MonoBehaviour
         {
             AddScore(0, 0);
         }
+        CoroutStarted = false;
     }
 
     public void NewBot(int lvl,bool rand,float screenTime) //création du bot selon le level

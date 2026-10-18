@@ -48,11 +48,11 @@ public class GameMaster : MonoBehaviour
     {
         transform.localScale = new Vector3(1, 1, 1);
         imgZQSD.enabled = true;
-        if (pvp) { imgArrows.enabled = true; }
+        if (pvp) imgArrows.enabled = true; 
         btnRetry.gameObject.SetActive(false);
         btnNext.gameObject.SetActive(false);
         txtCentral.fontSize = 300f;
-        if (audio.isPlaying) { audio.Stop(); }
+        if (audio.isPlaying) audio.Stop(); 
         audio.Play();
         for (int i = timeIntro; i > 0; i--) //decompte de depart
         {
@@ -69,7 +69,7 @@ public class GameMaster : MonoBehaviour
         txtCentral.text = StringResult();
         ChangeUI();
         imgZQSD.enabled = false;
-        if (pvp) { imgArrows.enabled = false; }
+        if (pvp) imgArrows.enabled = false;
         transform.localScale = new Vector3(1, 1, 1);
     }
 

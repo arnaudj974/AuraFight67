@@ -7,7 +7,7 @@ public class Bubble : MonoBehaviour
 {
 
     private char inputAsked=' ';
-    public Coroutine corout;
+    Coroutine corout;
     public TextMeshProUGUI txt;
     public Image image;
     private RectTransform rectThis;
@@ -83,7 +83,6 @@ public class Bubble : MonoBehaviour
             Show();
             yield return new WaitForSeconds(screenTime);
             Hide();
-            
         }
     }
 

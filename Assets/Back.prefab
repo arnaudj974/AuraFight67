@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2522394147703728144}
   - component: {fileID: 8528218364223299908}
   - component: {fileID: 6851741053317890805}
+  - component: {fileID: 5886020629647438838}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -103,6 +104,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5886020629647438838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257476185660396728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3008ce255185140b52a8fec8f47861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  backSchool: {fileID: -1980765279835512771, guid: 4fca935e069921c49ba7b4770c573acb, type: 3}
+  backChurch: {fileID: -483109212159811774, guid: ec58af93667d64148bc6bf68cb497ff3, type: 3}
+  backAutomn: {fileID: -8104607993462817495, guid: 0b180f5e08eaa6a45a10c90ccf877fd6, type: 3}
+  backWinter: {fileID: -8502199577989048593, guid: cdc8b70b4f424f64daf1d083e0c189e2, type: 3}
+  imgBack: {fileID: 7986469902259016660}
 --- !u!1 &3714484947663188821
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5019402111680336584, guid: e58e224782ddb3c4593f691d4edbc521, type: 3}
+  m_Sprite: {fileID: -1980765279835512771, guid: 4fca935e069921c49ba7b4770c573acb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

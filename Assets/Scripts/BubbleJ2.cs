@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BubbleJ2 : MonoBehaviour
 {
     private string inputAsked;
-    public Coroutine corout;
+     Coroutine corout;
     public Image arrow;
     public Bubble bulle;
     public Image image;
