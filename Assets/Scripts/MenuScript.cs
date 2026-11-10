@@ -2,56 +2,44 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
-    public GameObject buttonQuit;
-    public GameObject buttonPlay;
-    public TextMeshProUGUI titre;
-    private Coroutine corout;
-    private Coroutine corout2;
+    [SerializeField] private Button buttonQuit;
+    [SerializeField] private Button buttonPlayCamp;
+    [SerializeField] private Button buttonPlayInfi;
+    [SerializeField] private Button buttonPlayPvp;
+    [SerializeField] private TextMeshProUGUI titre;
+
+    void Awake()
+    {
+        buttonQuit.onClick.AddListener(Quit);
+        buttonPlayCamp.onClick.AddListener(() => LoadGameScene(GameManager.Mode.Campagne));
+        buttonPlayInfi.onClick.AddListener(() => LoadGameScene(GameManager.Mode.Infini));
+        buttonPlayPvp.onClick.AddListener(() => LoadGameScene(GameManager.Mode.PvP));
+    }
 
     void Start()
     {
-        StartChangeFont();
-        StartChangeRotation();
+        StartCoroutine(ChangeFont());
+        StartCoroutine(ChangeRotation());
     }
 
-    void Update()
+    public void LoadGameScene(GameManager.Mode mode)
     {
-
+        GameManager.Instance.mode = mode;
+        SceneManager.LoadSceneAsync("Game");
     }
 
-    public void LoadGameScene()
-    {
-        SceneManager.LoadSceneAsync("GamePvE");
-    }
-
-    public void LoadGameScenePvP()
-    {
-        SceneManager.LoadSceneAsync("GamePvP");
-    }
-    public void LoadGameSceneInfinie()
-    {
-        SceneManager.LoadSceneAsync("GameInfinie");
-    }
     public void Quit()
     {
-#if UNITY_STANDALONE
-        Application.Quit();
-#endif
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-    }
-
-    public void StartChangeFont()
-    {
-        corout = StartCoroutine(ChangeFont());
-    }
-    public void StopChangeFont()
-    {
-        StopCoroutine(corout);
+        #if UNITY_STANDALONE
+            Application.Quit();
+        #endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
     public IEnumerator ChangeFont()
@@ -73,14 +61,7 @@ public class MenuScript : MonoBehaviour
             }
         }
     }
-    public void StartChangeRotation()
-    {
-        corout2 = StartCoroutine(ChangeRotation());
-    }
-    public void StopChangeRotation()
-    {
-        StopCoroutine(corout2);
-    }
+
     public IEnumerator ChangeRotation()
     {
         float rotate = 0f;

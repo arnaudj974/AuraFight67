@@ -8,13 +8,9 @@ public class Bot : MonoBehaviour
     private Coroutine corout;
     public Score score;
     public Animator anim;
-    public bool CoroutStarted { get; private set; }
-    void Start()
-    {
+    public bool coroutStarted { get; private set; }
 
-    }
-
-    void Update()
+    public void ChangeSpeed()
     {
         anim.SetFloat("multSpeed", score.mult); //update de l'animation suivant la mult
     }
@@ -25,13 +21,16 @@ public class Bot : MonoBehaviour
     }
 
     public void StopBot()
-    {
-        StopCoroutine(corout);
+    {   
+        if(coroutStarted)
+        {
+            StopCoroutine(corout);
+        }
     }
 
     public IEnumerator LaunchBot(float delai, int points)
     {
-        CoroutStarted = true;
+        coroutStarted = true;
         float tpsBot = Random.Range(0.1f, tpsRep);
         bool trouve = false;
         if (delai >= tpsBot)
@@ -47,7 +46,7 @@ public class Bot : MonoBehaviour
         {
             AddScore(0, 0);
         }
-        CoroutStarted = false;
+        coroutStarted = false;
     }
 
     public void NewBot(int lvl,bool rand,float screenTime) //création du bot selon le level

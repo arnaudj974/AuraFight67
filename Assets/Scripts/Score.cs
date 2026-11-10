@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Score : MonoBehaviour
 {
@@ -8,15 +9,7 @@ public class Score : MonoBehaviour
     public int mult = 1;
     public TextMeshProUGUI txt;
     private List<int> listMult = new List<int>();
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
+    public UnityEvent OnMultChanged;
 
     public void AddScore(int points)
     {
@@ -31,6 +24,7 @@ public class Score : MonoBehaviour
             listMult.RemoveAt(0);
         }
         mult=ReturnMult();
+        OnMultChanged?.Invoke();
     }
 
     public int ReturnMult() //calculer le mult suivant le nombre de bons inputs réussis à la suite

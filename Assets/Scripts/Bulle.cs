@@ -6,24 +6,19 @@ public class Bulle : MonoBehaviour
 {
     [SerializeField] private Image arrow;
     [SerializeField] private Image image;
-    private RectTransform rectThis;
+    private RectTransform rectImage;
     private RectTransform rectArrow;
     string inputAsked;
     Coroutine corout;
-    public bool CoroutStarted { get; private set; }
+    public bool coroutStarted { get; private set; }
 
     void Awake()
     {
 
-        rectThis = GetComponent<RectTransform>();
+        rectImage = image.GetComponent<RectTransform>();
         rectArrow = arrow.GetComponent<RectTransform>();
         image.enabled = false;
         arrow.enabled = false;
-    }
-
-    void Update()
-    {
-
     }
 
     public string GetInputAsked()
@@ -73,24 +68,28 @@ public class Bulle : MonoBehaviour
 
     public void StopBulle()
     {
-        StopCoroutine(corout);
+        if (coroutStarted)
+        {
+            StopCoroutine(corout);
+        }
     }
 
     public IEnumerator SpawnBulle(float waitTime, float screenTime)
     {
-        CoroutStarted = true;
+        coroutStarted = true;
         Hide();
         yield return new WaitForSeconds(waitTime);
         Show();
         PositionRandom();
         yield return new WaitForSeconds(screenTime);
-        CoroutStarted = false;
+        Hide();
+        coroutStarted = false;
     }
 
     public void Clear()
     {
         StopBulle();
-        CoroutStarted = false;
+        coroutStarted = false;
         image.enabled = false;
         arrow.enabled = false;
         inputAsked = "";
@@ -99,7 +98,7 @@ public class Bulle : MonoBehaviour
     public void PositionRandom()
     {
         Vector3 v = new Vector3(Random.Range(-130f, 130f), Random.Range(-200f, 200f), 0);
-        rectThis.anchoredPosition = v;
+        rectImage.anchoredPosition = v;
         rectArrow.anchoredPosition = v;
         arrow.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }

@@ -10,13 +10,13 @@ public class Player : MonoBehaviour
     public AudioSource audioBooing;
     public AudioSource audio67;
     public bool pvp;
-    public bool CoroutStarted{ get; private set; }
+    public bool coroutStarted { get; private set; }
     void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    void Update()
+    public void ChangeSpeed()
     {
         anim.SetFloat("multSpeed", score.mult);
     }
@@ -28,15 +28,18 @@ public class Player : MonoBehaviour
 
     public void StopPlayer()
     {
-        StopCoroutine(corout);
+        if (coroutStarted)
+        {
+            StopCoroutine(corout);
+        }
     }
 
     public IEnumerator LaunchPlayer(float delai) //ajoute un 0 à la listMult si le joueur n'input pas dans le delai imparti
     {
-        CoroutStarted = true;
+        coroutStarted = true;
         yield return new WaitForSeconds(delai);
         AddScore(0, 0);
-        CoroutStarted = false;
+        coroutStarted = false;
     }
 
     public void AddScore(int points,int _mult)

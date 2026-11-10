@@ -5,10 +5,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    public enum Mode {Campagne, Infini, PvP }
+    public enum Mode { Campagne, Infini, PvP }
     public Mode mode;
-    public enum Time { Intro,Jeu,Fin}
-    public Time time;
     public enum ControlScheme { KeyboardZQSD, KeyboardARROWS, Gamepad }
     public ControlScheme csPlayer1;
     public ControlScheme csPlayer2;
@@ -29,13 +27,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }  
-    
+    }
+
     public void ChangeMode(Mode m)
     {
         if (m == Mode.PvP)
         {
-            if(Gamepad.all.Count > 0)
+            if (Gamepad.all.Count > 0)
             {
                 csPlayer2 = ControlScheme.Gamepad;
                 csPlayer1 = ControlScheme.KeyboardARROWS;

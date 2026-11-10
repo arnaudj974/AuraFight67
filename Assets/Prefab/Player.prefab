@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96287660080b69843bb97473e0d7610b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerIndex: 0
   score: {fileID: 4950229479118049977}
   audioBooing: {fileID: 9045608550325167794}
   audio67: {fileID: 5041171621126156988}
@@ -343,7 +344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -47.00006}
+  m_AnchoredPosition: {x: 170, y: -47}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2764275274470096819
@@ -461,6 +462,21 @@ MonoBehaviour:
   score: 0
   mult: 1
   txt: {fileID: 6518734371522906913}
+  OnMultChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5554578073667813253}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: ChangeSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6832088177620231991
 GameObject:
   m_ObjectHideFlags: 0

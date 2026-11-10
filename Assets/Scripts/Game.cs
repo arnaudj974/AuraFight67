@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.Events;
 
 
 public class Game : MonoBehaviour
@@ -22,27 +22,33 @@ public class Game : MonoBehaviour
     float _gameTime = 0f;
     bool changedKey1 = true;
     bool changedKey2 = true;
+    bool pvp;
+    public UnityEvent OnFinStart;
 
     void Awake()
     {
-
+        pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
+        enabled = false;
+        OnStart(true);
     }
 
-    void Start()
-    {
-
-
+    public void StartGame()
+    { 
+        enabled = true; 
     }
 
     void Update()
     {
-        bool pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
-        if (GameManager.Instance.time != GameManager.Time.Jeu) return; //ne fait rien si pas en jeu
-        if (gameTime > _gameTime && !bulle.CoroutStarted) //la coroutine de la bulle doit être finie
+        if (gameTime <= _gameTime && !bulle.coroutStarted) //la coroutine de la bulle doit être finie
+        {
+            OnFinStart?.Invoke();
+            enabled = false;
+        }
+        else
         {
             _gameTime += Time.deltaTime;
 
-            if (!bulle.CoroutStarted) //Start la bulle
+            if (!bulle.coroutStarted) //Start la bulle
             {
                 bulle.StartBulle(waitTime, screenTime);
             }
@@ -53,13 +59,12 @@ public class Game : MonoBehaviour
             }
             else
             {
-                if (!player.CoroutStarted) player.StartPlayer(screenTime);
-                if (pvp) { if (!player2.CoroutStarted) player2.StartPlayer(screenTime); }
-                else { if (!bot.CoroutStarted) bot.StartBot(screenTime, points); }
+                if (!player.coroutStarted) player.StartPlayer(screenTime);
+                if (pvp) { if (!player2.coroutStarted) player2.StartPlayer(screenTime); }
+                else { if (!bot.coroutStarted) bot.StartBot(screenTime, points); }
                 //if()
             }
         }
-        else GameManager.Instance.time = GameManager.Time.Fin;
     }
 
     public int GetResult()
@@ -114,5 +119,6 @@ public class Game : MonoBehaviour
         player2?.Clear();
         bot?.NewBot(lvl, false, screenTime);
         bulle.Clear();
+        _gameTime = 0f;
     }
 }

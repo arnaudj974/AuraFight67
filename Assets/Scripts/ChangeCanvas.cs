@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -20,15 +21,17 @@ public class ChangeCanvas : MonoBehaviour
     [SerializeField] private Sprite spriteRed;
     AudioSource audio;
     bool endChange;
+    bool pvp;
+    public UnityEvent OnJeuStart;
 
     void Awake()
     {
+        pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
         audio = GetComponentInChildren<AudioSource>();
     }
 
     IEnumerator Start()
     {
-        GameManager.Instance.time = GameManager.Time.Intro;
         panel.SetActive(true);
         btnRetry.gameObject.SetActive(false);
         btnNext.gameObject.SetActive(false);
@@ -41,16 +44,10 @@ public class ChangeCanvas : MonoBehaviour
         }
         btnRetry.gameObject.SetActive(true);
         panel.SetActive(false);
-        GameManager.Instance.time = GameManager.Time.Jeu;
+        OnJeuStart?.Invoke();
     }
 
-    void Update()
-    {
-        if (GameManager.Instance.time != GameManager.Time.Fin) return;
-        if (!endChange) ChangeFinalPanel();
-    }
-
-    void ChangeFinalPanel()
+    public void ChangeFinalPanel()
     {
         endChange = true;
         btnNext.gameObject.SetActive(true);
@@ -62,7 +59,6 @@ public class ChangeCanvas : MonoBehaviour
 
     string StringResult()
     {
-        bool pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
         switch (game.GetResult())
         {
             case 0: return !pvp ? "YOU WIN !" : "PLAYER 1 WIN";
@@ -74,7 +70,6 @@ public class ChangeCanvas : MonoBehaviour
 
     void ChangeUI()
     {
-        bool pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
         if (!pvp)
         {
             switch (game.GetResult()) //change le panel suivant le score du joueur
@@ -107,5 +102,10 @@ public class ChangeCanvas : MonoBehaviour
     public void LoadMenuScene()
     {
         SceneManager.LoadSceneAsync("Menu");
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 }
