@@ -15,9 +15,9 @@ public class MenuScript : MonoBehaviour
     void Awake()
     {
         buttonQuit.onClick.AddListener(Quit);
-        buttonPlayCamp.onClick.AddListener(() => LoadGameScene(GameManager.Mode.Campagne));
-        buttonPlayInfi.onClick.AddListener(() => LoadGameScene(GameManager.Mode.Infini));
-        buttonPlayPvp.onClick.AddListener(() => LoadGameScene(GameManager.Mode.PvP));
+        buttonPlayCamp.onClick.AddListener(() => LoadGameScene(Mode.Campagne,1));
+        buttonPlayInfi.onClick.AddListener(() => LoadGameScene(Mode.Infini,1));
+        buttonPlayPvp.onClick.AddListener(() => LoadGameScene(Mode.PvP,1));
     }
 
     void Start()
@@ -26,9 +26,10 @@ public class MenuScript : MonoBehaviour
         StartCoroutine(ChangeRotation());
     }
 
-    public void LoadGameScene(GameManager.Mode mode)
+    public void LoadGameScene(Mode mode, int lvl)
     {
         GameManager.Instance.mode = mode;
+        GameManager.Instance.lvl = lvl;
         SceneManager.LoadSceneAsync("Game");
     }
 
@@ -79,17 +80,6 @@ public class MenuScript : MonoBehaviour
                 titre.transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, rotate);
                 rotate--;
             }
-        }
-    }
-    public IEnumerator Animate()
-    {
-        while (true)
-        {
-            float t = Mathf.PingPong(Time.time * 0.8f, 1f);
-            t = Mathf.SmoothStep(0f, 1f, t); // ease in/out
-            titre.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(-10f, 15f, t));
-            titre.fontSize = Mathf.Lerp(120f, 150f, t);
-            yield return null;
         }
     }
 }

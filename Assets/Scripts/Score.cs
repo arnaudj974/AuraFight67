@@ -5,18 +5,30 @@ using UnityEngine.Events;
 
 public class Score : MonoBehaviour
 {
-    public int score = 0;
-    public int mult = 1;
+    public int score { get; private set; }
+    public int mult { get; private set; }
     public TextMeshProUGUI txt;
     private List<int> listMult = new List<int>();
     public UnityEvent OnMultChanged;
 
-    public void AddScore(int points)
+    void Start()
+    {
+        mult = 1;
+        score = 0;
+    }
+    public void UpdateScore(int points,int mult)
+    {
+        AddtoMult(mult);
+        AddScore(points);
+        ShowScore();
+    }
+
+    void AddScore(int points)
     {
         score += points * mult;
     }
 
-    public void AddtoMult(int nb)
+    void AddtoMult(int nb)
     {
         listMult.Add(nb);
         if (listMult.Count == 11)
@@ -27,7 +39,7 @@ public class Score : MonoBehaviour
         OnMultChanged?.Invoke();
     }
 
-    public int ReturnMult() //calculer le mult suivant le nombre de bons inputs réussis à la suite
+    int ReturnMult() //calculer le mult suivant le nombre de bons inputs réussis à la suite
     {
         int i = listMult.Count-1;
         int m = 1;
@@ -39,22 +51,8 @@ public class Score : MonoBehaviour
         return m > 1 ? m / 2 : 1;
     }
 
-    public void ShowScore()
+    void ShowScore()
     {
         txt.text = score.ToString() + " X " + mult.ToString();
-    }
-
-    public void Clear()
-    {
-        score = 0;
-        mult = 1;
-        txt.text=" ";
-        listMult.Clear();
-    }
-
-    public bool Erreur()
-    {
-        if (listMult.Count==0) { return false; }
-        return listMult[listMult.Count - 1] == 0;
     }
 }

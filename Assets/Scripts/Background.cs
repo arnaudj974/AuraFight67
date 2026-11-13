@@ -8,6 +8,18 @@ public class Background : MonoBehaviour
     public Sprite backAutomn;
     public Sprite backWinter;
     public Image imgBack;
+
+    void Start()
+    {
+        if(Mode.Campagne == GameManager.Instance.mode)
+        {
+            ChangeBackground(GameManager.Instance.lvl);
+        }
+        else
+        {
+            ChangeBackground(Random.Range(1, 5));
+        }
+    }
     public void ChangeBackground(int lvl)
     {
         switch (lvl)

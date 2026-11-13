@@ -389,6 +389,7 @@ MonoBehaviour:
   timeIntro: 3
   game: {fileID: 0}
   txtCentral: {fileID: 7772230706625161512}
+  txtLevel: {fileID: 2057739801862619969}
   btnNext: {fileID: 4384636944703232991}
   btnRetry: {fileID: 6888912445530926860}
   panel: {fileID: 1558081917009198499}
@@ -396,6 +397,9 @@ MonoBehaviour:
   imgBtn: {fileID: 6773420955233935839}
   spriteGreen: {fileID: 6426330948416229734, guid: 73bc7d937cdceec4cb9bfb26e6704b59, type: 3}
   spriteRed: {fileID: 9108987205127488691, guid: 2ab1bba7db7ed864ca775853839732a9, type: 3}
+  OnJeuStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3601457473933619208
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,10 +953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed1f5d84ca9acf4bb186c146e1aa49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  listAudio:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1773157093519252503}
   spOn: {fileID: -2501938655932608004, guid: 1182f3f82c8043240a0ef30f26bf1f94, type: 3}
   spOff: {fileID: -4381033382122199382, guid: f3a79610cb64e704d87775fdeaaabe05, type: 3}
 --- !u!1 &9149110488665173039
@@ -1190,6 +1190,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6667211525774250003, guid: 29a8635d78037a64bb3e4b85a258e448, type: 3}
   m_PrefabInstance: {fileID: 5267481694916636080}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2057739801862619969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6167492514947575537, guid: 29a8635d78037a64bb3e4b85a258e448, type: 3}
+  m_PrefabInstance: {fileID: 5267481694916636080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &4384636944703232991 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8484929734490715759, guid: 29a8635d78037a64bb3e4b85a258e448, type: 3}

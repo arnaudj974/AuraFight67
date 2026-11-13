@@ -12,6 +12,7 @@ public class ChangeCanvas : MonoBehaviour
 
     [Header("Canvas")]
     [SerializeField] private TextMeshProUGUI txtCentral;
+    [SerializeField] private TextMeshProUGUI txtLevel;
     [SerializeField] private Button btnNext;
     [SerializeField] private Button btnRetry;
     [SerializeField] private GameObject panel;
@@ -20,18 +21,19 @@ public class ChangeCanvas : MonoBehaviour
     [SerializeField] private Sprite spriteGreen;
     [SerializeField] private Sprite spriteRed;
     AudioSource audio;
-    bool endChange;
     bool pvp;
+    int result;
     public UnityEvent OnJeuStart;
 
     void Awake()
     {
-        pvp = GameManager.Instance.mode == GameManager.Mode.PvP;
+        pvp = GameManager.Instance.mode == Mode.PvP;
         audio = GetComponentInChildren<AudioSource>();
     }
 
     IEnumerator Start()
     {
+        if (!pvp) txtLevel.text = "LEVEL " + GameManager.Instance.lvl;
         panel.SetActive(true);
         btnRetry.gameObject.SetActive(false);
         btnNext.gameObject.SetActive(false);
@@ -49,9 +51,9 @@ public class ChangeCanvas : MonoBehaviour
 
     public void ChangeFinalPanel()
     {
-        endChange = true;
         btnNext.gameObject.SetActive(true);
         txtCentral.fontSize = 200f;
+        result = game.GetResult();
         txtCentral.text = StringResult();
         ChangeUI();
         panel.SetActive(true);
@@ -59,7 +61,7 @@ public class ChangeCanvas : MonoBehaviour
 
     string StringResult()
     {
-        switch (game.GetResult())
+        switch (result)
         {
             case 0: return !pvp ? "YOU WIN !" : "PLAYER 1 WIN";
             case 1: return "DRAW !";
@@ -70,32 +72,47 @@ public class ChangeCanvas : MonoBehaviour
 
     void ChangeUI()
     {
-        if (!pvp)
+        switch (GameManager.Instance.mode)
         {
-            switch (game.GetResult()) //change le panel suivant le score du joueur
-            {
-                case 0:
-                    txtBtn.text = "NEXT";
-                    imgBtn.sprite = spriteGreen;
-                    break;
-                case 1:
-                case 2:
-                    txtBtn.text = "RETRY";
-                    imgBtn.sprite = spriteRed;
-                    break;
-                case 3:  // cas de la victoire finale
-                    imgBtn.sprite = spriteRed;
-                    txtBtn.text = "QUIT";
-                    txtCentral.fontSize = 150f;
-                    txtCentral.text = "YOU CANT BEAT THE GOAT";
-                    btnNext.onClick.AddListener(LoadMenuScene);
-                    break;
-            }
-        }
-        else
-        {
-            txtBtn.text = "NEXT";
-            imgBtn.sprite = spriteGreen;
+            case Mode.PvP:
+                txtBtn.text = "NEXT";
+                imgBtn.sprite = spriteGreen;
+                break;
+            case Mode.Campagne:
+                switch (result) //change le panel suivant le score du joueur
+                {
+                    case 0:
+                        txtBtn.text = "NEXT";
+                        imgBtn.sprite = spriteGreen;
+                        GameManager.Instance.lvl++;
+                        break;
+                    case 1 or 2:
+                        txtBtn.text = "RETRY";
+                        imgBtn.sprite = spriteRed;
+                        break;
+                    case 3:  // cas de la victoire finale
+                        imgBtn.sprite = spriteRed;
+                        txtBtn.text = "QUIT";
+                        txtCentral.fontSize = 150f;
+                        txtCentral.text = "YOU CANT BEAT THE GOAT";
+                        btnNext.onClick.AddListener(LoadMenuScene);
+                        break;
+                }
+                break;
+            case Mode.Infini:
+                switch (result) //change le panel suivant le score du joueur
+                {
+                    case 0 or 1:
+                        txtBtn.text = "NEXT";
+                        imgBtn.sprite = spriteGreen;
+                        GameManager.Instance.lvl++;
+                        break;
+                    case 2:
+                        txtBtn.text = "RETRY";
+                        imgBtn.sprite = spriteRed;
+                        break;
+                }
+                break;
         }
     }
 

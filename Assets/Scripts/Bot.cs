@@ -1,34 +1,52 @@
 using System.Collections;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
+    Bulle bulle;
     private float tpsRep = 0.7f;
     private float chances = 2f;
     private Coroutine corout;
     public Score score;
     public Animator anim;
+    public AnimatorController animCamp;
+    public AnimatorController animInfi;
     public bool coroutStarted { get; private set; }
 
+    void Awake()
+    {
+        bulle = FindAnyObjectByType<Bulle>();
+        anim.runtimeAnimatorController = GameManager.Instance.mode == Mode.Infini ? animInfi : animCamp;
+
+    }
+    void OnEnable()
+    {
+        bulle.OnBulleStart += StartBot;
+    }
+    void OnDisable()
+    {
+        bulle.OnBulleStart -= StartBot;
+    }
     public void ChangeSpeed()
     {
         anim.SetFloat("multSpeed", score.mult); //update de l'animation suivant la mult
     }
 
-    public void StartBot(float delai, int points)
+    public void StartBot(float delai)
     {
-        corout = StartCoroutine(LaunchBot(delai, points));
+        corout = StartCoroutine(LaunchBot(delai));
     }
 
     public void StopBot()
-    {   
-        if(coroutStarted)
+    {
+        if (coroutStarted)
         {
             StopCoroutine(corout);
         }
     }
 
-    public IEnumerator LaunchBot(float delai, int points)
+    public IEnumerator LaunchBot(float delai)
     {
         coroutStarted = true;
         float tpsBot = Random.Range(0.1f, tpsRep);
@@ -40,7 +58,7 @@ public class Bot : MonoBehaviour
         }
         if (trouve)
         {
-            AddScore(points, 1);
+            AddScore(GameManager.points, 1);
         }
         else
         {
@@ -49,10 +67,9 @@ public class Bot : MonoBehaviour
         coroutStarted = false;
     }
 
-    public void NewBot(int lvl,bool rand,float screenTime) //création du bot selon le level
+    public void NewBot(int lvl, float screenTime) //création du bot selon le level
     {
-        score.Clear();
-        if (rand)
+        if (GameManager.Instance.mode==Mode.Infini)
         {
             anim.SetInteger("lvl", Random.Range(1, 6));
         }
@@ -72,8 +89,6 @@ public class Bot : MonoBehaviour
     }
     public void AddScore(int points, int mult)
     {
-        score.AddtoMult(mult);
-        score.AddScore(points);
-        score.ShowScore();
+        score.UpdateScore(points, mult);
     }
 }

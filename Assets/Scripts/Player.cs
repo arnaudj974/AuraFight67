@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-    public int playerIndex;
+    Bulle bulle;
     private Coroutine corout;
     public Score score;
     Animator anim;
@@ -11,9 +11,27 @@ public class Player : MonoBehaviour
     public AudioSource audio67;
     public bool pvp;
     public bool coroutStarted { get; private set; }
+    int index;
+
+    void Awake()
+    {
+        bulle = FindAnyObjectByType<Bulle>();
+        index = GetComponent<Controller>().GetIndex();
+    }
+    private void OnEnable()
+    {
+        bulle.OnBulleFind += CheckInputResponse;
+        bulle.OnBulleStart += StartPlayer;
+    }
+    private void OnDisable()
+    {
+        bulle.OnBulleFind -= CheckInputResponse;
+        bulle.OnBulleStart -= StartPlayer;
+    }
     void Start()
     {
         anim = GetComponent<Animator>();
+        pvp = GameManager.Instance.mode == Mode.PvP;
     }
 
     public void ChangeSpeed()
@@ -34,20 +52,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator LaunchPlayer(float delai) //ajoute un 0 à la listMult si le joueur n'input pas dans le delai imparti
+    public IEnumerator LaunchPlayer(float delai) 
     {
         coroutStarted = true;
         yield return new WaitForSeconds(delai);
-        AddScore(0, 0);
+        AddScore(0, 0); //si le player n'appuie sur rien
         coroutStarted = false;
     }
 
     public void AddScore(int points,int _mult)
     {
         if (_mult == 0) { PlaySound(audioBooing, audio67); }
-        score.AddtoMult(_mult);
-        score.AddScore(points);
-        score.ShowScore();
+        score.UpdateScore(points, _mult);
         if (score.mult == 5) { PlaySound(audio67, audioBooing); }
     }
     public void PlaySound(AudioSource audioPlay, AudioSource audioStop)
@@ -62,11 +78,21 @@ public class Player : MonoBehaviour
             if (!audioPlay.isPlaying) { audioPlay.Play(); }
         }
     }
-    public void Clear()
-    {
-        audio67.Stop();
-        audioBooing.Stop();
-        score.Clear();
-    }
 
+    public void CheckInputResponse(int index,bool trouve)
+    {
+        if (this.index == index)
+        {
+            if (trouve)
+            {
+                StopPlayer();
+                AddScore(GameManager.points, 1);
+            }
+            else
+            {
+                StopPlayer();
+                AddScore(0, 0);
+            }
+        }
+    }
 }
